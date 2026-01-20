@@ -2,7 +2,24 @@
 
 <div align="left">
 
-[![arXiv](https://img.shields.io/badge/arXiv-2510.04618-b31b1b.svg)](https://arxiv.org/abs/2510.04618)
+<p align="left" style="display:flex; gap:18px;">
+  <a href="https://arxiv.org/abs/2510.04618" target="_blank" style="margin-right:0;">
+    <img alt="arXiv" src="https://img.shields.io/badge/arXiv-2510.04618-b31b1b.svg">
+  </a>
+  <a href="https://join.slack.com/t/ace-agent/shared_invite/zt-3np7gusuf-DCUJaBshNjuAz5ECDx702w" target="_blank" style="margin-right:0;">
+    <img alt="Slack" src="https://img.shields.io/badge/Join Slack-4A154B?logo=slack&logoColor=white">
+  </a>
+  <a href="https://discord.gg/NW2W4xYt" target="_blank" style="margin-right:0;">
+    <img alt="Discord" src="https://img.shields.io/badge/Discord-7289DA?logo=discord&logoColor=white">
+  </a>
+  <a href="https://deepwiki.com/ace-agent/ace" target="_blank" style="margin-right:0;">
+    <img alt="Ask DeepWiki" src="https://deepwiki.com/badge.svg">
+  </a>
+  <a href="https://forms.gle/ZNJpqVBRa8QoPjzM7" target="_blank" style="margin-right:0;">
+    <img alt="Feedback & Interest Form" src="https://img.shields.io/badge/Feedback & Interest Form-4285F4?logo=googleforms&logoColor=white">
+  </a>
+</p>
+
 
 <img src="assets/images/ace_framework.png" alt="ACE Framework" width="800"/>
 
@@ -14,6 +31,9 @@
 
 ACE (Agentic Context Engineering) is a framework that enables large language models to self-improve by treating contexts as evolving playbooks that accumulate, refine, and organize strategies through a modular process of generation, reflection, and curation. Unlike traditional approaches that suffer from **brevity bias** and **context collapse**, ACE introduces structured, incremental updates guided by a grow-and-refine principle, preserving detailed, domain-specific knowledge while remaining comprehensive and scalable throughout adaptation.
 
+## Latest News
+- **2025 Nov**: ACE [Paper](https://arxiv.org/abs/2510.04618) and Repo says "Hello World"!
+
 ### Key Features
 
 - 🔄 **Three-Role Agentic Architecture**: Generator, Reflector, and Curator work together to continuously improve contexts
@@ -22,24 +42,28 @@ ACE (Agentic Context Engineering) is a framework that enables large language mod
 - 🚀 **High Efficiency**: 86.9% lower adaptation latency on average compared to existing adaptive methods
 - 💰 **Cost Effective**: Significantly fewer rollouts and lower dollar costs while achieving higher accuracy
 
-## 📊 Performance
+### Tutorials
+- 📚 **Adding Dataset for Evaluation** [Link](tutorials/ExtendingDatasets.md)
+- ✨ **Extending ACE for Tool Calling** (Coming Soon) 
+
+### 📊 Performance
 
 ACE consistently outperforms strong baselines, achieving average gains of **+10.6%** on agent tasks and **+8.6%** on domain-specific benchmarks, across both offline and online adaptation settings.
 
-### Benchmarks
+#### Benchmarks
 
 | Task Category | Dataset | Improvement | Details |
 |---------------|---------|-------------|---------|
 | **Agent Tasks** | AppWorld | +10.6% | Matches top-ranked production-level agent (GPT-4.1) on average and surpasses it on harder test-challenge split, using smaller open-source model |
 | **Finance** | FiNER + XBRL Formula | +8.6% | Domain-specific reasoning with structured information extraction |
 
-### Efficiency Improvements
+#### Efficiency Improvements
 
 - **Offline (AppWorld)**: -82.3% latency and -75.1% rollouts vs GEPA
 - **Online (FiNER)**: -91.5% latency and -83.6% token cost vs Dynamic Cheatsheet
 
 
-### How It Works
+#### How It Works
 
 1. **Generator** produces reasoning trajectories for new queries, surfacing both effective strategies and recurring pitfalls
 2. **Reflector** separates evaluation and insight extraction from curation, improving context quality
@@ -135,26 +159,26 @@ The `finance/run.py` script provides a unified interface for training and evalua
 
 ```bash
 # Offline training (with automatic initial and final testing)
-python -m finance.run \
+python -m eval.finance.run \
     --task_name finer \
     --mode offline \
     --save_path results
 
 # Online training and testing
-python -m finance.run \
+python -m eval.finance.run \
     --task_name finer \
     --mode online \
     --save_path results
 
 # Run evaluation on the test split only. Provide a pre-trained playbook or leave initial_playbook_path empty to evaluate an uninitialized playbook.
-python -m finance.run \
+python -m eval.finance.run \
     --task_name finer \
     --mode eval_only \
     --initial_playbook_path results/ace_run_TIMESTAMP_finer_offline/best_playbook.txt \
     --save_path test_results
 
 # Training with custom configuration
-python -m finance.run \
+python -m eval.finance.run \
     --task_name finer \
     --mode offline \
     --save_path results \
@@ -236,7 +260,7 @@ Each bullet has:
 - **Counts**: `helpful=X harmful=Y` updated by Reflector
 - **Content**: `:: actual advice or strategy`
 
-## 🎓 Key Innovations
+<!-- ## 🎓 Key Innovations
 
 ### 1. Incremental Delta Updates
 
@@ -248,14 +272,12 @@ A mechanism that balances steady context expansion with redundancy management by
 
 ### 3. Dedicated Reflector
 
-A specialized Reflector that separates evaluation and insight extraction from curation, improving context quality and downstream performance.
+A specialized Reflector that separates evaluation and insight extraction from curation, improving context quality and downstream performance. -->
 
-## 📬 Supported Tasks
-
-### Agent Tasks
+### 📬 Supported Tasks
+#### Agent Tasks
 - **AppWorld**: Simulated digital environment with app interactions
-
-### Domain-Specific Tasks
+#### Domain-Specific Tasks
 - **FiNER**: Financial information extraction
 - **XBRL Formula**: Structured financial data processing
 
@@ -286,17 +308,34 @@ class DataProcessor:
         # Calculate accuracy
         return sum(self.answer_is_correct(p, g) for p, g in zip(predictions, ground_truths)) / len(predictions)
 ```
-
 📖 **[Read the full extension guide →](EXTENDING_ACE.md)**
 
-The guide includes:
-- Step-by-step tutorial with complete code examples
-- Repository structure overview
-- Key implementation notes and best practices
-- Prompt customization guide
-- Reference to the `finance/` implementation
-- Troubleshooting tips and advanced topics
 
+## 🤝 Contributing
+We welcome contributions! Please follow these steps:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+
+## 📚 Additional Resources
+- **Blog Posts**: 
+  - [Medium: Agentic Context Engineering](https://medium.com/@bingqian/agentic-context-engineering-teaching-language-models-to-learn-from-experience-706c31a872ca)
+  - [MarkTechPost Coverage](https://www.marktechpost.com/2025/10/10/agentic-context-engineering-ace-self-improving-llms-via-evolving-contexts-not-fine-tuning/)
+  - [InfoQ Article](https://www.infoq.com/news/2025/10/agentic-context-eng/)
+
+### 🙏 Acknowledgments
+This work builds upon insights from Dynamic Cheatsheet and incorporates ideas from the broader LLM agent and context optimization research community.
+
+### 📧 Contact
+For questions and feedback:
+- **Paper Authors**: See [arXiv paper](https://arxiv.org/abs/2510.04618) for author contact information
+- **Issues**: Please open an issue on GitHub
+- **Discussions**: Join the [GitHub Discussions](../../discussions)
+
+---
 
 
 ## 📝 Citation
@@ -314,38 +353,6 @@ If you use ACE in your research, please cite our paper:
       url={https://arxiv.org/abs/2510.04618}, 
 }
 ```
-
-
-## 🤝 Contributing [TODO]
-
-(Placeholder) We welcome contributions! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📧 Contact
-
-For questions and feedback:
-
-- **Paper Authors**: See [arXiv paper](https://arxiv.org/abs/2510.04618) for author contact information
-- **Issues**: Please open an issue on GitHub
-- **Discussions**: Join the [GitHub Discussions](../../discussions)
-
-## 🙏 Acknowledgments
-
-This work builds upon insights from Dynamic Cheatsheet and incorporates ideas from the broader LLM agent and context optimization research community.
-
-## 📚 Additional Resources
-
-- **Blog Posts**: 
-  - [Medium: Agentic Context Engineering](https://medium.com/@bingqian/agentic-context-engineering-teaching-language-models-to-learn-from-experience-706c31a872ca)
-  - [MarkTechPost Coverage](https://www.marktechpost.com/2025/10/10/agentic-context-engineering-ace-self-improving-llms-via-evolving-contexts-not-fine-tuning/)
-  - [InfoQ Article](https://www.infoq.com/news/2025/10/agentic-context-eng/)
-
----
 
 <div align="center">
 

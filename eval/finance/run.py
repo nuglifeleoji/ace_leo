@@ -177,7 +177,7 @@ def main():
     print(f"{'='*60}\n")
     
     # Load data
-    with open("./finance/data/sample_config.json", 'r') as f:
+    with open("./eval/finance/data/sample_config.json", 'r') as f:
         task_config = json.load(f)
 
     train_samples, val_samples, test_samples, data_processor = preprocess_data(
