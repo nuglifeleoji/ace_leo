@@ -1,0 +1,12 @@
+{
+    "musr_team": {
+        "train_data": "./eval/musr_team/data/team_train.jsonl",
+        "val_data": "./eval/musr_team/data/team_val.jsonl",
+        "test_data": "./eval/musr_team/data/team_test.jsonl"
+    },
+    "musr_team_small": {
+        "train_data": "./eval/musr_team/data/team_train_50.jsonl",
+        "val_data": "./eval/musr_team/data/team_val.jsonl",
+        "test_data": "./eval/musr_team/data/team_test.jsonl"
+    }
+}
