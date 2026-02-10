@@ -1,12 +1,12 @@
 {
     "musr": {
-        "train_data": "./eval/musr/data/musr_train.jsonl",
-        "val_data": "./eval/musr/data/musr_val.jsonl",
-        "test_data": "./eval/musr/data/musr_test.jsonl"
+        "train_data": "./eval/musr_murder/data/musr_train.jsonl",
+        "val_data": "./eval/musr_murder/data/musr_val.jsonl",
+        "test_data": "./eval/musr_murder/data/musr_test.jsonl"
     },
     "musr_small": {
-        "train_data": "./eval/musr/data/musr_train_50.jsonl",
-        "val_data": "./eval/musr/data/musr_val.jsonl",
-        "test_data": "./eval/musr/data/musr_test.jsonl"
+        "train_data": "./eval/musr_murder/data/musr_train_50.jsonl",
+        "val_data": "./eval/musr_murder/data/musr_val.jsonl",
+        "test_data": "./eval/musr_murder/data/musr_test.jsonl"
     }
 }

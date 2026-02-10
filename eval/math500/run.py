@@ -1,37 +1,38 @@
 #!/usr/bin/env python3
 """
-Run script for ACE on MuSR (Multistep Soft Reasoning) task.
-
-MuSR tests multi-step reasoning across 3 subtasks:
-  - Murder mysteries (detective reasoning)
-  - Object placements (state tracking)
-  - Team allocation (constraint satisfaction)
+Run script for ACE on MATH-500 benchmark.
 
 Example usage:
     # Baseline evaluation (no playbook)
-    python -m eval.musr.run \
-        --task_name musr \
+    python -m eval.math500.run \
+        --task_name math500 \
         --mode eval_only \
-        --save_path results/musr_baseline
+        --save_path results/math500_baseline
 
-    # Offline training (full 303-sample train set)
-    python -m eval.musr.run \
-        --task_name musr \
+    # Offline training (small 50-sample train set)
+    python -m eval.math500.run \
+        --task_name math500_small \
         --mode offline \
-        --save_path results/musr_offline
+        --save_path results/math500_train50 \
+        --skip_initial_test \
+        --eval_steps 50 \
+        --save_steps 25
 
-    # Offline training (200-sample quick train)
-    python -m eval.musr.run \
-        --task_name musr_small \
+    # Offline training (full 200-sample train set)
+    python -m eval.math500.run \
+        --task_name math500 \
         --mode offline \
-        --save_path results/musr_small_offline
+        --save_path results/math500_train200 \
+        --skip_initial_test \
+        --eval_steps 100 \
+        --save_steps 50
 
     # Evaluation with a trained playbook
-    python -m eval.musr.run \
-        --task_name musr \
+    python -m eval.math500.run \
+        --task_name math500 \
         --mode eval_only \
-        --initial_playbook_path results/musr_offline/best_playbook.txt \
-        --save_path results/musr_eval
+        --initial_playbook_path results/math500_train200/best_playbook.txt \
+        --save_path results/math500_eval
 """
 import os
 import json
@@ -45,11 +46,11 @@ from utils import initialize_clients
 
 def parse_args():
     """Parse command line arguments."""
-    parser = argparse.ArgumentParser(description='ACE System - MuSR')
+    parser = argparse.ArgumentParser(description='ACE System - MATH-500')
 
     # Task configuration
     parser.add_argument("--task_name", type=str, required=True,
-                        help="Name of the task (e.g., 'musr', 'musr_small')")
+                        help="Name of the task (e.g., 'math500', 'math500_small')")
     parser.add_argument("--initial_playbook_path", type=str, default=None,
                         help="Path to initial playbook (optional)")
     parser.add_argument("--mode", type=str, default="offline",
@@ -130,7 +131,6 @@ def preprocess_data(task_name, config, mode):
     """
     processor = DataProcessor(task_name=task_name)
 
-    # For online and eval_only modes, only load test data
     if mode in ["online", "eval_only"]:
         train_samples = None
         val_samples = None
@@ -146,7 +146,6 @@ def preprocess_data(task_name, config, mode):
         else:
             print(f"Eval only mode: Testing on {len(test_samples)} examples")
 
-    # For offline mode, load train, val, and optionally test data
     else:
         train_samples = load_data(config["train_data"])
         val_samples = load_data(config["val_data"])
@@ -178,15 +177,15 @@ def main():
     args = parse_args()
 
     print(f"\n{'='*60}")
-    print(f"ACE SYSTEM - MuSR (Multistep Soft Reasoning)")
+    print(f"ACE SYSTEM - MATH-500")
     print(f"{'='*60}")
     print(f"Task: {args.task_name}")
     print(f"Mode: {args.mode.upper().replace('_', ' ')}")
     print(f"Generator Model: {args.generator_model}")
     print(f"{'='*60}\n")
 
-    # Load data
-    with open("./eval/musr_murder/data/sample_config.json", 'r') as f:
+    # Load config
+    with open("./eval/math500/data/sample_config.json", 'r') as f:
         task_config = json.load(f)
 
     if args.task_name not in task_config:
@@ -199,7 +198,7 @@ def main():
         args.mode
     )
 
-    # Load initial playbook (or use empty if None provided)
+    # Load initial playbook
     initial_playbook = load_initial_playbook(args.initial_playbook_path)
     if initial_playbook:
         print(f"Loaded initial playbook from {args.initial_playbook_path}\n")
@@ -239,14 +238,13 @@ def main():
         'api_provider': args.api_provider
     }
 
-    # Handle skip_initial_test
+    # Skip initial test if requested
     run_test_samples = test_samples
     if args.mode == "offline" and args.skip_initial_test:
-        print("Skipping test evaluation (--skip_initial_test)\n")
-        print("   Run eval_only with --initial_playbook_path to test the learned playbook.\n")
+        print("⏭️  Skipping test evaluation (--skip_initial_test)\n")
         run_test_samples = None
 
-    # Execute using the unified run method
+    # Execute
     try:
         results = ace_system.run(
             mode=args.mode,
@@ -257,8 +255,7 @@ def main():
             config=config
         )
     except UnboundLocalError as e:
-        print(f"\nError: {e}. This likely means all samples failed to evaluate.")
-        print("Check the logs for details on individual sample failures.")
+        print(f"\n Error: {e}.")
         results = {"accuracy": 0.0, "correct": 0, "total": 0}
 
     print(f"\nFinal results: {results}")

@@ -1,0 +1,12 @@
+{
+    "math500": {
+        "train_data": "./eval/math500/data/math500_train.jsonl",
+        "val_data": "./eval/math500/data/math500_val.jsonl",
+        "test_data": "./eval/math500/data/math500_test.jsonl"
+    },
+    "math500_small": {
+        "train_data": "./eval/math500/data/math500_train_50.jsonl",
+        "val_data": "./eval/math500/data/math500_val.jsonl",
+        "test_data": "./eval/math500/data/math500_test.jsonl"
+    }
+}
