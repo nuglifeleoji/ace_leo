@@ -1,0 +1,7 @@
+{
+    "test_time_learning": {
+        "train_data": "./eval/MemoryAgentBench/data/ttl_train.jsonl",
+        "val_data": "./eval/MemoryAgentBench/data/ttl_val.jsonl",
+        "test_data": "./eval/MemoryAgentBench/data/ttl_test.jsonl"
+    }
+}

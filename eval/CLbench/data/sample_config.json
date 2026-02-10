@@ -1,0 +1,12 @@
+{
+    "clbench": {
+        "train_data": "./eval/CLbench/data/clbench_train.jsonl",
+        "val_data": "./eval/CLbench/data/clbench_val.jsonl",
+        "test_data": "./eval/CLbench/data/clbench_test.jsonl"
+    },
+    "clbench_small": {
+        "train_data": "./eval/CLbench/data/clbench_train_50.jsonl",
+        "val_data": "./eval/CLbench/data/clbench_val.jsonl",
+        "test_data": "./eval/CLbench/data/clbench_test.jsonl"
+    }
+}

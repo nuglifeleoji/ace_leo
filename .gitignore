@@ -3,4 +3,22 @@
 .env
 __pycache__/
 */__pycache__/
+**/__pycache__/
 results/
+*.pyc
+.DS_Store
+
+# venv files accidentally created in ace/ directory
+ace/bin/
+ace/lib/
+ace/share/
+ace/pyvenv.cfg
+
+# Data files (too large for git, regenerate with prepare_data.py)
+eval/*/data/*.jsonl
+
+# GAIA (gated dataset, requires HF auth)
+eval/gaia/
+
+# HuggingFace cache
+gaia_data/

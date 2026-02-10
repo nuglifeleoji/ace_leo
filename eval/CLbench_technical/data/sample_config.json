@@ -1,0 +1,12 @@
+{
+    "technical": {
+        "train_data": "./eval/CLbench_technical/data/technical_train.jsonl",
+        "val_data": "./eval/CLbench_technical/data/technical_val.jsonl",
+        "test_data": "./eval/CLbench_technical/data/technical_test.jsonl"
+    },
+    "technical_small": {
+        "train_data": "./eval/CLbench_technical/data/technical_train_50.jsonl",
+        "val_data": "./eval/CLbench_technical/data/technical_val.jsonl",
+        "test_data": "./eval/CLbench_technical/data/technical_test.jsonl"
+    }
+}

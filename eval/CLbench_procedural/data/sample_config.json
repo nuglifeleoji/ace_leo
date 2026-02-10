@@ -1,0 +1,12 @@
+{
+    "procedural": {
+        "train_data": "./eval/CLbench_procedural/data/procedural_train.jsonl",
+        "val_data": "./eval/CLbench_procedural/data/procedural_val.jsonl",
+        "test_data": "./eval/CLbench_procedural/data/procedural_test.jsonl"
+    },
+    "procedural_small": {
+        "train_data": "./eval/CLbench_procedural/data/procedural_train_50.jsonl",
+        "val_data": "./eval/CLbench_procedural/data/procedural_val.jsonl",
+        "test_data": "./eval/CLbench_procedural/data/procedural_test.jsonl"
+    }
+}

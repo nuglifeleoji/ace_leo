@@ -1,0 +1,12 @@
+{
+    "musr_location": {
+        "train_data": "./eval/musr_location/data/location_train.jsonl",
+        "val_data": "./eval/musr_location/data/location_val.jsonl",
+        "test_data": "./eval/musr_location/data/location_test.jsonl"
+    },
+    "musr_location_small": {
+        "train_data": "./eval/musr_location/data/location_train_50.jsonl",
+        "val_data": "./eval/musr_location/data/location_val.jsonl",
+        "test_data": "./eval/musr_location/data/location_test.jsonl"
+    }
+}
