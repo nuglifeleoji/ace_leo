@@ -1,0 +1,12 @@
+{
+    "gpqa": {
+        "train_data": "./eval/gpqa/data/gpqa_train.jsonl",
+        "val_data": "./eval/gpqa/data/gpqa_val.jsonl",
+        "test_data": "./eval/gpqa/data/gpqa_test.jsonl"
+    },
+    "gpqa_small": {
+        "train_data": "./eval/gpqa/data/gpqa_train_50.jsonl",
+        "val_data": "./eval/gpqa/data/gpqa_val.jsonl",
+        "test_data": "./eval/gpqa/data/gpqa_test.jsonl"
+    }
+}
