@@ -1,0 +1,12 @@
+{
+    "clutrr": {
+        "train_data": "./eval/clutrr/data/train.jsonl",
+        "val_data": "./eval/clutrr/data/val.jsonl",
+        "test_data": "./eval/clutrr/data/test.jsonl"
+    },
+    "clutrr_small": {
+        "train_data": "./eval/clutrr/data/train_50.jsonl",
+        "val_data": "./eval/clutrr/data/val.jsonl",
+        "test_data": "./eval/clutrr/data/test.jsonl"
+    }
+}
