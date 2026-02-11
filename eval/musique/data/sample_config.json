@@ -1,0 +1,12 @@
+{
+    "musique": {
+        "train_data": "./eval/musique/data/musique_train.jsonl",
+        "val_data": "./eval/musique/data/musique_val.jsonl",
+        "test_data": "./eval/musique/data/musique_test.jsonl"
+    },
+    "musique_small": {
+        "train_data": "./eval/musique/data/musique_train_50.jsonl",
+        "val_data": "./eval/musique/data/musique_val.jsonl",
+        "test_data": "./eval/musique/data/musique_test.jsonl"
+    }
+}
