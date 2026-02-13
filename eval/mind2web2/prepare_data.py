@@ -134,7 +134,6 @@ def process_step(task: dict, step_idx: int, rng: random.Random) -> dict:
     
     # Combine and shuffle candidates
     all_candidates = []
-    correct_indices = set()
     
     for pc in pos_candidates:
         all_candidates.append(("pos", pc))

@@ -1,0 +1,12 @@
+{
+    "logiqa": {
+        "train_data": "./eval/logiqa/data/train.jsonl",
+        "val_data": "./eval/logiqa/data/val.jsonl",
+        "test_data": "./eval/logiqa/data/test.jsonl"
+    },
+    "logiqa_small": {
+        "train_data": "./eval/logiqa/data/train_50.jsonl",
+        "val_data": "./eval/logiqa/data/val.jsonl",
+        "test_data": "./eval/logiqa/data/test.jsonl"
+    }
+}

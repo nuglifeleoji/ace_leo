@@ -1,25 +1,11 @@
 """
 Data processor for Mind2Web web navigation task (50-candidate version).
 
-Mind2Web is a dataset for evaluating generalist web agents. Each sample is a
-single "step" in a multi-step web navigation task:
+Task: Given a webpage with ~50 candidate elements and a navigation task
+description with action history, select the correct element and specify
+the action (CLICK, TYPE, or SELECT with value).
 
-- context: Compact list of ~50 candidate elements on the current webpage
-  (tag, text, key attributes — extracted from cleaned HTML)
-- question: Task description + previous action history + instruction to
-  select the correct element and action
-- target: Correct action in format "[idx] OP [tag] element_text: value"
-  e.g., "[7] SELECT [combobox] Reservation type: Pickup"
-
-The model must:
-1. Identify the correct element from the candidate list (element selection)
-2. Predict the correct operation type (CLICK / TYPE / SELECT)
-3. Provide the correct value for TYPE/SELECT operations
-
-Evaluation checks:
-- Element index match (primary)
-- Operation type match
-- Value match (for TYPE/SELECT)
+Evaluation: Three-level matching (element index + operation type + value).
 """
 import os
 import json

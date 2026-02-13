@@ -1,25 +1,11 @@
 """
 Data processor for Mind2Web web navigation task.
 
-Mind2Web is a dataset for evaluating generalist web agents. Each sample is a
-single "step" in a multi-step web navigation task:
+Task: Given a webpage with ~200 candidate elements and a navigation task
+description with action history, select the correct element and specify
+the action (CLICK, TYPE, or SELECT with value).
 
-- context: Compact list of ~200 candidate elements on the current webpage
-  (tag, text, key attributes — extracted from cleaned HTML)
-- question: Task description + previous action history + instruction to
-  select the correct element and action
-- target: Correct action in format "[idx] OP [tag] element_text: value"
-  e.g., "[7] SELECT [combobox] Reservation type: Pickup"
-
-The model must:
-1. Identify the correct element from the candidate list (element selection)
-2. Predict the correct operation type (CLICK / TYPE / SELECT)
-3. Provide the correct value for TYPE/SELECT operations
-
-Evaluation checks:
-- Element index match (primary)
-- Operation type match
-- Value match (for TYPE/SELECT)
+Evaluation: Three-level matching (element index + operation type + value).
 """
 import os
 import json
@@ -39,14 +25,12 @@ def load_data(data_path: str) -> List[Dict[str, Any]]:
     """
     if not os.path.exists(data_path):
         raise FileNotFoundError(f"Data file not found: {data_path}")
-
     data = []
     with open(data_path, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             if line:
                 data.append(json.loads(line))
-
     print(f"Loaded {len(data)} samples from {data_path}")
     return data
 
@@ -227,7 +211,6 @@ class DataProcessor:
         for predicted, ground_truth in zip(out, target):
             pred = self._parse_prediction(predicted)
             truth = self._parse_prediction(ground_truth)
-
             if pred["element_idx"] == truth["element_idx"] and truth["element_idx"] is not None:
                 elem_correct += 1
             if pred["op"] == truth["op"] and truth["op"] is not None:

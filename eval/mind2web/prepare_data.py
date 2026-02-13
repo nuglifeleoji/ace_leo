@@ -6,7 +6,7 @@ Downloads the Mind2Web dataset from HuggingFace and converts it into
 step-level ACE samples with candidate element selection formulation.
 
 Each web navigation task has multiple steps. Each step becomes one ACE sample:
-- context: Compact list of ~50 candidate elements (tag + text + key attributes)
+- context: Compact list of ~200 candidate elements (tag + text + key attributes)
 - question: Task description + previous action history
 - target: Correct action representation (OP + element info + value)
 
@@ -133,7 +133,6 @@ def process_step(task: dict, step_idx: int, rng: random.Random) -> dict:
     
     # Combine and shuffle candidates
     all_candidates = []
-    correct_indices = set()
     
     for pc in pos_candidates:
         all_candidates.append(("pos", pc))

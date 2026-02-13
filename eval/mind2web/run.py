@@ -1,41 +1,9 @@
-#!/usr/bin/env python3
-"""
-Run script for ACE on Mind2Web web navigation task.
-
-Example usage:
-    # Baseline evaluation (no playbook)
-    python -m eval.mind2web.run \
-        --task_name mind2web \
-        --mode eval_only \
-        --save_path results/mind2web_baseline
-
-    # Offline training (full train set)
-    python -m eval.mind2web.run \
-        --task_name mind2web \
-        --mode offline \
-        --save_path results/mind2web_offline
-
-    # Offline training (small 200-sample train set)
-    python -m eval.mind2web.run \
-        --task_name mind2web_small \
-        --mode offline \
-        --save_path results/mind2web_small_offline
-
-    # Evaluation with a trained playbook
-    python -m eval.mind2web.run \
-        --task_name mind2web \
-        --mode eval_only \
-        --initial_playbook_path results/mind2web_offline/best_playbook.txt \
-        --save_path results/mind2web_eval
-"""
 import os
 import json
 import argparse
-from datetime import datetime
 from .data_processor import DataProcessor, load_data
 
 from ace import ACE
-from utils import initialize_clients
 
 
 def parse_args():
