@@ -14,10 +14,11 @@ ace/lib/
 ace/share/
 ace/pyvenv.cfg
 
-# Data files (too large for git, regenerate with prepare_data.py)
+# Data files (too large for git)
 eval/*/data/*.jsonl
-
-# GAIA (gated dataset, requires HF auth)
+eval/*/data/*.npy
+eval/*/data/*_meta.json
+eval/*/data/cluster*_meta.json
 eval/gaia/
 
 # HuggingFace cache

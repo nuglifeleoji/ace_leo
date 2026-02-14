@@ -1,9 +1,0 @@
-{
-  "model": "text-embedding-3-large",
-  "n_samples": 4477,
-  "embedding_dim": 3072,
-  "total_tokens": 15791609,
-  "max_chars": 24000,
-  "train_path": "./eval/mind2web/data/mind2web_train.jsonl",
-  "timestamp": "2026-02-13 16:31:14"
-}
