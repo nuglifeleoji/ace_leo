@@ -38,5 +38,45 @@
         "train_data": "./eval/mind2web/data/mind2web_train_cluster15.jsonl",
         "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
         "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_cluster100": {
+        "train_data": "./eval/mind2web/data/mind2web_train_cluster100.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_cluster120": {
+        "train_data": "./eval/mind2web/data/mind2web_train_cluster120.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_dpp10": {
+        "train_data": "./eval/mind2web/data/mind2web_train_dpp10.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_dpp15": {
+        "train_data": "./eval/mind2web/data/mind2web_train_dpp15.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_dpp20": {
+        "train_data": "./eval/mind2web/data/mind2web_train_dpp20.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_dpp30": {
+        "train_data": "./eval/mind2web/data/mind2web_train_dpp30.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_dpp50": {
+        "train_data": "./eval/mind2web/data/mind2web_train_dpp50.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_dpp80": {
+        "train_data": "./eval/mind2web/data/mind2web_train_dpp80.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
     }
 }
