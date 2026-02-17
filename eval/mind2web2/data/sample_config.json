@@ -43,5 +43,15 @@
         "train_data": "./eval/mind2web2/data/mind2web2_train_cluster80.jsonl",
         "val_data": "./eval/mind2web2/data/mind2web2_val.jsonl",
         "test_data": "./eval/mind2web2/data/mind2web2_test.jsonl"
+    },
+    "mind2web2_cluster100": {
+        "train_data": "./eval/mind2web2/data/mind2web2_train_cluster100.jsonl",
+        "val_data": "./eval/mind2web2/data/mind2web2_val.jsonl",
+        "test_data": "./eval/mind2web2/data/mind2web2_test.jsonl"
+    },
+    "mind2web2_cluster120": {
+        "train_data": "./eval/mind2web2/data/mind2web2_train_cluster120.jsonl",
+        "val_data": "./eval/mind2web2/data/mind2web2_val.jsonl",
+        "test_data": "./eval/mind2web2/data/mind2web2_test.jsonl"
     }
 }
