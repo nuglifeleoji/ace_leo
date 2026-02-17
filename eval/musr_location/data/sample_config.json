@@ -88,5 +88,30 @@
         "train_data": "./eval/musr_location/data/location_train_cluster2x30.jsonl",
         "val_data": "./eval/musr_location/data/location_val.jsonl",
         "test_data": "./eval/musr_location/data/location_test.jsonl"
+    },
+    "musr_location_herd5": {
+        "train_data": "./eval/musr_location/data/location_train_herd5.jsonl",
+        "val_data": "./eval/musr_location/data/location_val.jsonl",
+        "test_data": "./eval/musr_location/data/location_test.jsonl"
+    },
+    "musr_location_herd10": {
+        "train_data": "./eval/musr_location/data/location_train_herd10.jsonl",
+        "val_data": "./eval/musr_location/data/location_val.jsonl",
+        "test_data": "./eval/musr_location/data/location_test.jsonl"
+    },
+    "musr_location_herd15": {
+        "train_data": "./eval/musr_location/data/location_train_herd15.jsonl",
+        "val_data": "./eval/musr_location/data/location_val.jsonl",
+        "test_data": "./eval/musr_location/data/location_test.jsonl"
+    },
+    "musr_location_herd20": {
+        "train_data": "./eval/musr_location/data/location_train_herd20.jsonl",
+        "val_data": "./eval/musr_location/data/location_val.jsonl",
+        "test_data": "./eval/musr_location/data/location_test.jsonl"
+    },
+    "musr_location_herd30": {
+        "train_data": "./eval/musr_location/data/location_train_herd30.jsonl",
+        "val_data": "./eval/musr_location/data/location_val.jsonl",
+        "test_data": "./eval/musr_location/data/location_test.jsonl"
     }
 }
