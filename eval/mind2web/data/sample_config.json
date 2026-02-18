@@ -78,5 +78,35 @@
         "train_data": "./eval/mind2web/data/mind2web_train_dpp80.jsonl",
         "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
         "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_herd10": {
+        "train_data": "./eval/mind2web/data/mind2web_train_herd10.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_herd15": {
+        "train_data": "./eval/mind2web/data/mind2web_train_herd15.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_herd20": {
+        "train_data": "./eval/mind2web/data/mind2web_train_herd20.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_herd30": {
+        "train_data": "./eval/mind2web/data/mind2web_train_herd30.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_herd50": {
+        "train_data": "./eval/mind2web/data/mind2web_train_herd50.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_herd80": {
+        "train_data": "./eval/mind2web/data/mind2web_train_herd80.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
     }
 }
