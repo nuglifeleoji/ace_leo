@@ -1,0 +1,7 @@
+{
+    "lsat_lr": {
+        "train_data": "./eval/lsat_lr/data/lsat_lr_train.jsonl",
+        "val_data": "./eval/lsat_lr/data/lsat_lr_val.jsonl",
+        "test_data": "./eval/lsat_lr/data/lsat_lr_test.jsonl"
+    }
+}

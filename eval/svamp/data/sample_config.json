@@ -1,0 +1,12 @@
+{
+    "svamp": {
+        "train_data": "./eval/svamp/data/svamp_train.jsonl",
+        "val_data": "./eval/svamp/data/svamp_val.jsonl",
+        "test_data": "./eval/svamp/data/svamp_test.jsonl"
+    },
+    "svamp_small": {
+        "train_data": "./eval/svamp/data/svamp_train_100.jsonl",
+        "val_data": "./eval/svamp/data/svamp_val.jsonl",
+        "test_data": "./eval/svamp/data/svamp_test.jsonl"
+    }
+}

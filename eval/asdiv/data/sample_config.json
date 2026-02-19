@@ -1,0 +1,12 @@
+{
+    "asdiv": {
+        "train_data": "./eval/asdiv/data/asdiv_train.jsonl",
+        "val_data": "./eval/asdiv/data/asdiv_val.jsonl",
+        "test_data": "./eval/asdiv/data/asdiv_test.jsonl"
+    },
+    "asdiv_small": {
+        "train_data": "./eval/asdiv/data/asdiv_train_100.jsonl",
+        "val_data": "./eval/asdiv/data/asdiv_val.jsonl",
+        "test_data": "./eval/asdiv/data/asdiv_test.jsonl"
+    }
+}
