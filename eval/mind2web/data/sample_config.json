@@ -118,5 +118,50 @@
         "train_data": "./eval/mind2web/data/mind2web_train_cluster200.jsonl",
         "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
         "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random10_seed0": {
+        "train_data": "./eval/mind2web/data/mind2web_random10_seed0.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random10_seed1": {
+        "train_data": "./eval/mind2web/data/mind2web_random10_seed1.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random10_seed2": {
+        "train_data": "./eval/mind2web/data/mind2web_random10_seed2.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random10_seed3": {
+        "train_data": "./eval/mind2web/data/mind2web_random10_seed3.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random10_seed4": {
+        "train_data": "./eval/mind2web/data/mind2web_random10_seed4.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random15_seed0": {
+        "train_data": "./eval/mind2web/data/mind2web_random15_seed0.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random15_seed1": {
+        "train_data": "./eval/mind2web/data/mind2web_random15_seed1.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random15_seed2": {
+        "train_data": "./eval/mind2web/data/mind2web_random15_seed2.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random15_seed3": {
+        "train_data": "./eval/mind2web/data/mind2web_random15_seed3.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
     }
 }

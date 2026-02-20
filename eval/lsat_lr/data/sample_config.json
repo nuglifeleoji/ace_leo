@@ -3,5 +3,15 @@
         "train_data": "./eval/lsat_lr/data/lsat_lr_train.jsonl",
         "val_data": "./eval/lsat_lr/data/lsat_lr_val.jsonl",
         "test_data": "./eval/lsat_lr/data/lsat_lr_test.jsonl"
+    },
+    "lsat_lr_cluster20": {
+        "train_data": "./eval/lsat_lr/data/lsat_lr_train_cluster20.jsonl",
+        "val_data": "./eval/lsat_lr/data/lsat_lr_val.jsonl",
+        "test_data": "./eval/lsat_lr/data/lsat_lr_test.jsonl"
+    },
+    "lsat_lr_cluster100": {
+        "train_data": "./eval/lsat_lr/data/lsat_lr_train_cluster100.jsonl",
+        "val_data": "./eval/lsat_lr/data/lsat_lr_val.jsonl",
+        "test_data": "./eval/lsat_lr/data/lsat_lr_test.jsonl"
     }
 }
