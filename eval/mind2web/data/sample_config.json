@@ -163,5 +163,70 @@
         "train_data": "./eval/mind2web/data/mind2web_random15_seed3.jsonl",
         "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
         "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random20_seed0": {
+        "train_data": "./eval/mind2web/data/mind2web_random20_seed0.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random20_seed1": {
+        "train_data": "./eval/mind2web/data/mind2web_random20_seed1.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random20_seed2": {
+        "train_data": "./eval/mind2web/data/mind2web_random20_seed2.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_random20_seed3": {
+        "train_data": "./eval/mind2web/data/mind2web_random20_seed3.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_cluster10_stepaware05": {
+        "train_data": "./eval/mind2web/data/mind2web_train_cluster10_stepaware05.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_cluster15_stepaware05": {
+        "train_data": "./eval/mind2web/data/mind2web_train_cluster15_stepaware05.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_cluster20_stepaware05": {
+        "train_data": "./eval/mind2web/data/mind2web_train_cluster20_stepaware05.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_cluster20_stepaware10": {
+        "train_data": "./eval/mind2web/data/mind2web_train_cluster20_stepaware10.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_cluster20_stepaware03": {
+        "train_data": "./eval/mind2web/data/mind2web_train_cluster20_stepaware03.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_cluster10_stepaware10": {
+        "train_data": "./eval/mind2web/data/mind2web_train_cluster10_stepaware10.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_cluster15_stepaware10": {
+        "train_data": "./eval/mind2web/data/mind2web_train_cluster15_stepaware10.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_cluster30_stepaware10": {
+        "train_data": "./eval/mind2web/data/mind2web_train_cluster30_stepaware10.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_cluster50_stepaware10": {
+        "train_data": "./eval/mind2web/data/mind2web_train_cluster50_stepaware10.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
     }
 }
