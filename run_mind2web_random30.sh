@@ -1,5 +1,6 @@
 #!/bin/bash
-# Run random20 seed 4-7 and random30 seed 0-7, with auto test eval after each
+# Run random30 seed 0-7 with auto test eval after each
+# Uses nohup-safe logging — survives lid close
 
 PYTHON=/opt/miniconda3/envs/ace-leo/bin/python
 BASE=results/mind2web_random_more
@@ -53,11 +54,6 @@ run_one() {
     fi
 }
 
-# random20 seed 4-7
-for SEED in 4 5 6 7; do
-    run_one "mind2web_random20_seed${SEED}" 20
-done
-
 # random30 seed 0-7
 for SEED in 0 1 2 3 4 5 6 7; do
     run_one "mind2web_random30_seed${SEED}" 30
@@ -65,14 +61,13 @@ done
 
 echo ""
 echo "============================================================"
-echo " ALL DONE - Summary"
+echo " ALL DONE - random30 Summary"
 echo "============================================================"
-for NAME in mind2web_random20_seed4 mind2web_random20_seed5 mind2web_random20_seed6 mind2web_random20_seed7 \
-            mind2web_random30_seed0 mind2web_random30_seed1 mind2web_random30_seed2 mind2web_random30_seed3 \
-            mind2web_random30_seed4 mind2web_random30_seed5 mind2web_random30_seed6 mind2web_random30_seed7; do
+for SEED in 0 1 2 3 4 5 6 7; do
+    NAME="mind2web_random30_seed${SEED}"
     RESULT=$(find $BASE/${NAME}_test -name "final_results.json" 2>/dev/null | head -1)
     if [ -n "$RESULT" ]; then
-        ACC=$(cat $RESULT | grep accuracy | grep -oE '[0-9]+\.[0-9]+')
+        ACC=$(cat $RESULT | python3 -c "import json,sys; print(json.load(sys.stdin)['test_results']['accuracy'])" 2>/dev/null)
         echo "$NAME: test=$ACC"
     else
         echo "$NAME: no result"

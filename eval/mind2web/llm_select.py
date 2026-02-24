@@ -63,8 +63,9 @@ DEFAULT_TOP_K         = 20
 DEFAULT_BATCH_SIZE    = 100
 DEFAULT_TOP_PER_BATCH = 5
 
-RETRY_ATTEMPTS = 3
-RETRY_DELAY    = 5   # seconds between retries
+RETRY_ATTEMPTS = 5
+RETRY_DELAY    = 15  # seconds between retries (OpenAI TPM rate limit recovery)
+BATCH_SLEEP    = 3   # seconds between Stage-1 batches to avoid TPM bursts
 
 
 # ── IO ───────────────────────────────────────────────────────────────────────
@@ -362,6 +363,9 @@ def stage1_batch_filter(
             if idx not in seen:
                 finalists.append(idx)
                 seen.add(idx)
+
+        if batch_num < n_batches:
+            time.sleep(BATCH_SLEEP)
 
     print(f"\n  Stage 1 done: {len(finalists)} unique finalists")
     return finalists
