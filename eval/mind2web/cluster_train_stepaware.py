@@ -18,9 +18,20 @@ Solution:
     augmented[i] = concat(norm(embedding[i]), pos_weight * pos[i])
     where pos[i] = step_idx / (total_steps - 1)  ∈ [0, 1]
 
+Website Deduplication (--dedup, default ON):
+    After K-means selects one representative per cluster, check for
+    duplicate websites. If two clusters would pick the same website,
+    the cluster with the worse centroid-distance yields its pick and
+    searches for the next-best candidate from a different website.
+    This preserves semantic representativeness while maximising the
+    number of distinct websites in the final selection.
+
 Usage:
-    # Generate step-aware clusters for k=10,15,20
+    # Generate step-aware clusters for k=10,15,20 (with dedup)
     python -m eval.mind2web.cluster_train_stepaware --clusters 10 15 20
+
+    # Disable website deduplication
+    python -m eval.mind2web.cluster_train_stepaware --clusters 15 --no_dedup
 
     # Tune position weight (0=pure semantic, 1=heavy position influence)
     python -m eval.mind2web.cluster_train_stepaware --clusters 20 --pos_weight 0.5
@@ -119,14 +130,24 @@ def build_augmented_embeddings(
 def cluster_and_select(
     augmented_embeddings: np.ndarray,
     original_embeddings: np.ndarray,
+    train_data: List[Dict],
     k: int,
     seed: int = 42,
+    dedup_website: bool = True,
 ) -> Tuple[List[int], np.ndarray]:
     """
     Run K-means on augmented embeddings, then select the sample
-    closest to each centroid in the ORIGINAL embedding space
-    (so the selected sample is the most semantically representative
-    within its position-aware cluster).
+    closest to each centroid in the augmented space.
+
+    When dedup_website=True (default), a post-processing pass ensures
+    every selected sample comes from a distinct website:
+      - Clusters are processed in order of their best sample's distance
+        to the centroid (closest = highest-quality cluster gets first pick).
+      - If a cluster's best candidate shares a website with an already-chosen
+        sample, the cluster falls back to its 2nd-best candidate, then 3rd,
+        etc., until a unique website is found.
+      - If a cluster has no candidates with a unique website, it keeps its
+        original best pick (fallback, logged as a warning).
 
     Returns:
         (selected_indices, labels)
@@ -137,17 +158,54 @@ def cluster_and_select(
     labels = kmeans.fit_predict(augmented_embeddings)
     centroids_aug = kmeans.cluster_centers_
 
-    selected_indices = []
+    # For each cluster, rank all members by distance to centroid (ascending)
+    cluster_candidates: Dict[int, List[Tuple[float, int]]] = {}
     for cid in range(k):
         mask = labels == cid
         indices = np.where(mask)[0]
         if len(indices) == 0:
             continue
-        # Distance in augmented space (consistent with how clusters were formed)
-        dists = np.linalg.norm(augmented_embeddings[indices] - centroids_aug[cid], axis=1)
-        best = indices[np.argmin(dists)]
-        selected_indices.append(int(best))
+        dists = np.linalg.norm(
+            augmented_embeddings[indices] - centroids_aug[cid], axis=1
+        )
+        # sorted: best (smallest dist) first
+        sorted_pairs = sorted(zip(dists.tolist(), indices.tolist()), key=lambda x: x[0])
+        cluster_candidates[cid] = sorted_pairs
 
+    if not dedup_website:
+        # Simple: just take the best from each cluster
+        selected_indices = [pairs[0][1] for pairs in cluster_candidates.values()]
+        return selected_indices, labels
+
+    # ── Website-dedup greedy assignment ──────────────────────────────────────
+    # Process clusters in order of their #1 candidate's distance (best quality
+    # clusters get priority to claim their preferred website first).
+    sorted_clusters = sorted(
+        cluster_candidates.items(), key=lambda kv: kv[1][0][0]  # sort by best dist
+    )
+
+    used_websites: set = set()
+    selected_by_cid: Dict[int, int] = {}
+
+    for cid, candidates in sorted_clusters:
+        chosen_idx = None
+        for _dist, idx in candidates:
+            website = train_data[idx].get("website", "__unknown__")
+            if website not in used_websites:
+                chosen_idx = idx
+                used_websites.add(website)
+                break
+        if chosen_idx is None:
+            # All candidates share a website with an already-chosen sample;
+            # fall back to the original best to avoid dropping the cluster.
+            chosen_idx = candidates[0][1]
+            fallback_site = train_data[chosen_idx].get("website", "?")
+            print(f"      [dedup] cluster {cid}: no unique website found "
+                  f"(fallback → {fallback_site})")
+        selected_by_cid[cid] = chosen_idx
+
+    # Return in cluster-id order (deterministic)
+    selected_indices = [selected_by_cid[cid] for cid in sorted(selected_by_cid)]
     return selected_indices, labels
 
 
@@ -159,8 +217,9 @@ def report_selection(
     labels: np.ndarray,
     k: int,
     pos_weight: float,
+    dedup_website: bool = True,
 ):
-    """Print statistics including step position distribution."""
+    """Print statistics including step position distribution and website uniqueness."""
     cluster_sizes = np.bincount(labels)
     print(f"    Cluster sizes: min={cluster_sizes.min()}, max={cluster_sizes.max()}, "
           f"mean={cluster_sizes.mean():.1f}")
@@ -170,11 +229,15 @@ def report_selection(
         str(train_data[i].get("operation", {}).get("op", "?"))
         for i in selected_indices
     )
-    websites = set(train_data[i].get("website", "?") for i in selected_indices)
+    website_list = [train_data[i].get("website", "?") for i in selected_indices]
+    unique_websites = len(set(website_list))
+    dup_sites = {w: c for w, c in Counter(website_list).items() if c > 1}
 
-    print(f"    Domains: {dict(domains)}")
+    print(f"    Domains   : {dict(domains)}")
     print(f"    Operations: {dict(ops)}")
-    print(f"    Unique websites: {len(websites)}/{k}")
+    dedup_flag = " (dedup ON)" if dedup_website else " (dedup OFF)"
+    print(f"    Unique websites: {unique_websites}/{k}{dedup_flag}"
+          + (f"  duplicates={dup_sites}" if dup_sites else "  ✓ all unique"))
 
     # Step position analysis (the key metric we're improving)
     positions = []
@@ -189,18 +252,37 @@ def report_selection(
     mid = sum(1 for p in positions if 0.33 <= p < 0.67)
     late = sum(1 for p in positions if p >= 0.67)
     print(f"    Step positions: avg={avg_pos:.2f}, early={early}, mid={mid}, late={late}")
-    print(f"    (pos_weight={pos_weight}; vanilla cluster20 was: avg=0.11, early=18, mid=1, late=1)")
+    print(f"    (pos_weight={pos_weight}; vanilla cluster20 had: avg=0.11, early=18, mid=1, late=1)")
+
+    # Per-sample detail
+    for i in selected_indices:
+        d = train_data[i]
+        step = d.get("step_idx", 0)
+        total = d.get("total_steps", 1)
+        pos = step / max(total - 1, 1)
+        pos_l = "E" if pos < 0.33 else ("M" if pos < 0.67 else "L")
+        op = d.get("operation", {}).get("op", "?")
+        site = d.get("website", "?")
+        print(f"      [{pos_l}] {site:20s} step{step+1}/{total}  {op}")
 
 
 # ── Config Update ───────────────────────────────────────────────
 
-def update_config(cluster_sizes: List[int], pos_weight: float):
+def make_tag(pos_weight: float, dedup: bool) -> str:
+    """Build a short tag string that encodes the method variant."""
+    tag = f"_stepaware{str(pos_weight).replace('.', '')}"
+    if dedup:
+        tag += "_dedup"
+    return tag
+
+
+def update_config(cluster_sizes: List[int], pos_weight: float, dedup: bool):
     config = {}
     if os.path.exists(CONFIG_PATH):
         with open(CONFIG_PATH, "r") as f:
             config = json.load(f)
 
-    tag = f"_stepaware{str(pos_weight).replace('.', '')}"
+    tag = make_tag(pos_weight, dedup)
     for k in cluster_sizes:
         name = f"mind2web_cluster{k}{tag}"
         config[name] = {
@@ -233,7 +315,12 @@ def main():
         "--seed", type=int, default=42,
         help="Random seed for K-means (default: 42)"
     )
+    parser.add_argument(
+        "--no_dedup", action="store_true",
+        help="Disable website-level deduplication post-processing (default: dedup ON)"
+    )
     args = parser.parse_args()
+    args.dedup = not args.no_dedup
 
     # Load
     if not os.path.exists(EMBEDDING_PATH):
@@ -264,16 +351,21 @@ def main():
           f"early={sum(1 for p in all_positions if p < 0.33)}, "
           f"mid={sum(1 for p in all_positions if 0.33 <= p < 0.67)}, "
           f"late={sum(1 for p in all_positions if p >= 0.67)}")
+    print(f"Website deduplication: {'ON' if args.dedup else 'OFF'}")
 
-    tag = f"_stepaware{str(args.pos_weight).replace('.', '')}"
+    tag = make_tag(args.pos_weight, args.dedup)
 
     for k in args.clusters:
         print(f"\n{'='*60}")
-        print(f"  K={k}: Step-aware cluster selection (pos_weight={args.pos_weight})")
+        print(f"  K={k}: Step-aware cluster selection "
+              f"(pos_weight={args.pos_weight}, dedup={'ON' if args.dedup else 'OFF'})")
         print(f"{'='*60}")
 
-        selected, labels = cluster_and_select(augmented, embeddings, k, seed=args.seed)
-        report_selection(train_data, selected, labels, k, args.pos_weight)
+        selected, labels = cluster_and_select(
+            augmented, embeddings, train_data, k,
+            seed=args.seed, dedup_website=args.dedup,
+        )
+        report_selection(train_data, selected, labels, k, args.pos_weight, args.dedup)
 
         # Save subset
         subset = [train_data[i] for i in selected]
@@ -283,9 +375,10 @@ def main():
 
         # Save metadata
         meta = {
-            "method": "step_aware_kmeans",
+            "method": "step_aware_kmeans_dedup" if args.dedup else "step_aware_kmeans",
             "k": k,
             "pos_weight": args.pos_weight,
+            "dedup_website": args.dedup,
             "seed": args.seed,
             "selected_indices": selected,
             "n_total": len(train_data),
@@ -299,7 +392,7 @@ def main():
             json.dump(meta, f, indent=2)
         print(f"    Saved metadata → {meta_path}")
 
-    update_config(args.clusters, args.pos_weight)
+    update_config(args.clusters, args.pos_weight, args.dedup)
 
     print(f"\n{'='*60}")
     print(f"  DONE — Generated {len(args.clusters)} step-aware training subsets")
