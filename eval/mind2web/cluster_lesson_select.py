@@ -175,15 +175,15 @@ def report_selection(
 
 # ── Config Update ─────────────────────────────────────────────────────────────
 
-def update_config(ks: List[int]):
+def update_config(ks: List[int], suffix: str = ""):
     config = {}
     if os.path.exists(CONFIG_PATH):
         with open(CONFIG_PATH, "r") as f:
             config = json.load(f)
     for k in ks:
-        name = f"mind2web_cluster{k}_lesson"
+        name = f"mind2web_cluster{k}_lesson{suffix}"
         config[name] = {
-            "train_data": f"./eval/mind2web/data/mind2web_train_cluster{k}_lesson.jsonl",
+            "train_data": f"./eval/mind2web/data/mind2web_train_cluster{k}_lesson{suffix}.jsonl",
             "val_data":   "./eval/mind2web/data/mind2web_val.jsonl",
             "test_data":  "./eval/mind2web/data/mind2web_test.jsonl",
         }
@@ -200,6 +200,8 @@ def main():
     )
     parser.add_argument("--clusters", type=int, nargs="+", default=DEFAULT_CLUSTERS)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--suffix", type=str, default="",
+                        help="Suffix appended to output filenames and task names (e.g. '_rerun')")
     parser.add_argument("--no_dedup", action="store_true",
                         help="Disable website-level deduplication (default: ON)")
     args = parser.parse_args()
@@ -234,29 +236,29 @@ def main():
 
         # Save subset
         subset   = [train_data[i] for i in selected]
-        out_path = os.path.join(OUTPUT_DIR, f"mind2web_train_cluster{k}_lesson.jsonl")
+        out_path = os.path.join(OUTPUT_DIR, f"mind2web_train_cluster{k}_lesson{args.suffix}.jsonl")
         save_jsonl(subset, out_path)
 
         # Save metadata
         meta = {
             "method": "lesson_kmeans_dedup" if dedup else "lesson_kmeans",
-            "k": k, "seed": args.seed, "dedup_website": dedup,
+            "k": k, "seed": args.seed, "suffix": args.suffix, "dedup_website": dedup,
             "selected_indices": selected,
             "lessons": [lessons[i] for i in selected],
             "n_total": len(train_data),
         }
-        with open(os.path.join(OUTPUT_DIR, f"cluster{k}_lesson_meta.json"), "w") as f:
+        with open(os.path.join(OUTPUT_DIR, f"cluster{k}_lesson{args.suffix}_meta.json"), "w") as f:
             json.dump(meta, f, indent=2, ensure_ascii=False)
 
-    update_config(args.clusters)
+    update_config(args.clusters, suffix=args.suffix)
 
     print()
     print("=" * 60)
     print(f"  DONE — {len(args.clusters)} lesson-based subsets generated")
     print("=" * 60)
     for k in args.clusters:
-        print(f"    mind2web_cluster{k}_lesson  →  "
-              f"eval/mind2web/data/mind2web_train_cluster{k}_lesson.jsonl")
+        print(f"    mind2web_cluster{k}_lesson{args.suffix}  →  "
+              f"eval/mind2web/data/mind2web_train_cluster{k}_lesson{args.suffix}.jsonl")
 
 
 if __name__ == "__main__":
