@@ -60,17 +60,26 @@ lesson_test = {}
 lesson_val  = {}
 
 for k in [10, 15, 20, 30, 40, 50]:
-    # val: from training final_results (use test2 for k=10 if exists)
-    suffixes = ["mind2web_cluster10_lesson"] if k == 10 else [f"mind2web_cluster{k}_lesson"]
-    for sfx in [f"mind2web_cluster{k}_lesson"]:
+    # val: from training final_results
+    # k=20 prefer rerun (seed=123), k=10 use retrained version
+    val_dirs = [f"mind2web_cluster{k}_lesson"]
+    if k == 20:
+        val_dirs = ["mind2web_cluster20_lesson_rerun", "mind2web_cluster20_lesson"]
+    for sfx in val_dirs:
         vp = sorted(BASE.glob(f"mind2web_lesson_cluster/{sfx}/ace_run_*_offline/final_results.json"))
         if vp:
             v = load_acc(vp[-1], "val")
             if v is not None:
                 lesson_val[k] = v
-    # test: prefer test2 for k=10
-    test_dirs = [f"mind2web_cluster{k}_lesson_test2", f"mind2web_cluster{k}_lesson_test"] if k == 10 \
-                else [f"mind2web_cluster{k}_lesson_test"]
+                break
+
+    # test: k=20 prefer rerun; k=10 prefer test2
+    if k == 20:
+        test_dirs = ["mind2web_cluster20_lesson_rerun_test", "mind2web_cluster20_lesson_test"]
+    elif k == 10:
+        test_dirs = ["mind2web_cluster10_lesson_test2", "mind2web_cluster10_lesson_test"]
+    else:
+        test_dirs = [f"mind2web_cluster{k}_lesson_test"]
     for td in test_dirs:
         tp = sorted(BASE.glob(f"mind2web_lesson_cluster/{td}/ace_run_*_eval_only/final_results.json"))
         if tp:

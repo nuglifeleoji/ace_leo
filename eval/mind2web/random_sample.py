@@ -15,8 +15,6 @@ CONFIG_PATH = "./eval/mind2web/data/sample_config.json"
 
 SEEDS = [0, 1, 2, 3, 4]
 N_SAMPLES = 10
-
-
 def load_jsonl(path):
     data = []
     with open(path, "r", encoding="utf-8") as f:
