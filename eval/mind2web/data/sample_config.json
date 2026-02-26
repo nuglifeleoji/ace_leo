@@ -363,5 +363,10 @@
         "train_data": "./eval/mind2web/data/mind2web_train_cluster20_lesson_rerun.jsonl",
         "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
         "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
+    },
+    "mind2web_cluster40": {
+        "train_data": "./eval/mind2web/data/mind2web_train_cluster40.jsonl",
+        "val_data": "./eval/mind2web/data/mind2web_val.jsonl",
+        "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
     }
 }

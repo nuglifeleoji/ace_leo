@@ -28,24 +28,37 @@ def load_acc(path, split):
     return None
 
 # ── Vanilla Cluster ───────────────────────────────────────────────────────────
-# k=10,15,20 from original vs_random experiments; k=30+ not done in that format
 
 vanilla_test = {}
 vanilla_val  = {}
 
+# k=10,15,20 from vs_random experiment folders
 for k, folder, subfolder in [
     (10, "mind2web_cluster10_vs_random",    "cluster10"),
     (15, "mind2web_cluster15_vs_random15",  "cluster15"),
     (20, "mind2web_cluster20_vs_random20",  "cluster20"),
 ]:
-    # val: from training final_results
     vp = sorted(BASE.glob(f"{folder}/{subfolder}/ace_run_*_offline/final_results.json"))
     if vp:
         v = load_acc(vp[-1], "val")
         if v is not None:
             vanilla_val[k] = v
-    # test: from eval_only final_results
     tp = sorted(BASE.glob(f"{folder}/{subfolder}_test/ace_run_*_eval_only/final_results.json"))
+    if tp:
+        t = load_acc(tp[-1], "test")
+        if t is not None:
+            vanilla_test[k] = t
+
+# k=30,40,50 from standalone folders (backfill)
+for k in [30, 40, 50]:
+    # val: from training run
+    vp = sorted(BASE.glob(f"mind2web_cluster{k}/ace_run_*_offline/final_results.json"))
+    if vp:
+        v = load_acc(vp[-1], "val")
+        if v is not None:
+            vanilla_val[k] = v
+    # test: from test eval folder
+    tp = sorted(BASE.glob(f"mind2web_cluster{k}_test/ace_run_*_eval_only/final_results.json"))
     if tp:
         t = load_acc(tp[-1], "test")
         if t is not None:
@@ -135,47 +148,16 @@ RANDOM_COLOR  = "#4C72B0"   # blue
 
 ks_lesson  = sorted(lesson_test.keys())
 ks_vanilla = sorted(vanilla_test.keys())
-ks_random  = sorted(random_test.keys())
-all_ks     = sorted(set(ks_lesson) | set(ks_vanilla) | set(ks_random))
+all_ks     = sorted(set(ks_lesson) | set(ks_vanilla))
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 6), sharey=False)
 fig.suptitle("Mind2Web: Lesson Clustering vs Vanilla K-means vs Random",
              fontsize=14, fontweight="bold", y=1.01)
 
-for ax, (split, v_dict, l_dict, r_dict) in zip(axes, [
-    ("Test",       vanilla_test, lesson_test, random_test),
-    ("Validation", vanilla_val,  lesson_val,  random_val),
+for ax, (split, v_dict, l_dict) in zip(axes, [
+    ("Test",       vanilla_test, lesson_test),
+    ("Validation", vanilla_val,  lesson_val),
 ]):
-    # ── Random scatter ────────────────────────────────────────────────────────
-    rng = np.random.default_rng(0)
-    rand_xs, rand_ys = [], []
-    for k in all_ks:
-        scores = r_dict.get(k, [])
-        if scores:
-            jitter = rng.uniform(-0.6, 0.6, len(scores))
-            for j, s in zip(jitter, scores):
-                rand_xs.append(k + j)
-                rand_ys.append(s)
-    if rand_xs:
-        ax.scatter(rand_xs, rand_ys, color=RANDOM_COLOR, alpha=0.45, s=50,
-                   zorder=2, label="Random (each seed)", edgecolors="white",
-                   linewidths=0.4)
-
-    # ── Random mean line ──────────────────────────────────────────────────────
-    rm_ks, rm_vals = [], []
-    for k in all_ks:
-        scores = r_dict.get(k, [])
-        if scores:
-            rm_ks.append(k)
-            rm_vals.append(np.mean(scores))
-    if rm_ks:
-        ax.plot(rm_ks, rm_vals, "o--", color=RANDOM_COLOR, linewidth=1.8,
-                markersize=6, zorder=3, label="Random (mean)", alpha=0.8)
-        for kv, mv in zip(rm_ks, rm_vals):
-            ax.annotate(f"{mv:.3f}", (kv, mv),
-                        textcoords="offset points", xytext=(-30, 5),
-                        fontsize=7.5, color=RANDOM_COLOR)
-
     # ── Vanilla cluster line ──────────────────────────────────────────────────
     vc_ks = [k for k in ks_vanilla if k in v_dict]
     vc_vs = [v_dict[k] for k in vc_ks]
@@ -208,7 +190,7 @@ for ax, (split, v_dict, l_dict, r_dict) in zip(axes, [
     ax.legend(fontsize=9, loc="lower right")
 
     # y-axis range
-    all_vals = rand_ys + vc_vs + lc_vs
+    all_vals = vc_vs + lc_vs
     if all_vals:
         ymin, ymax = min(all_vals), max(all_vals)
         pad = (ymax - ymin) * 0.35
