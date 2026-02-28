@@ -390,15 +390,15 @@
     "test_data": "./eval/mind2web/data/mind2web_test.jsonl"
   },
   "mind2web_correct100": {
-    "train_file": "eval/mind2web/data/mind2web_correct100.jsonl",
-    "val_file": "eval/mind2web/data/mind2web_val.jsonl",
-    "test_file": "eval/mind2web/data/mind2web_test.jsonl",
-    "description": "Top 100 samples DeepSeek-V3 answered correctly (seed=42)"
+    "description": "Top 100 samples DeepSeek-V3 answered correctly (seed=42)",
+    "train_data": "eval/mind2web/data/mind2web_correct100.jsonl",
+    "val_data": "eval/mind2web/data/mind2web_val.jsonl",
+    "test_data": "eval/mind2web/data/mind2web_test.jsonl"
   },
   "mind2web_incorrect100": {
-    "train_file": "eval/mind2web/data/mind2web_incorrect100.jsonl",
-    "val_file": "eval/mind2web/data/mind2web_val.jsonl",
-    "test_file": "eval/mind2web/data/mind2web_test.jsonl",
-    "description": "Top 100 samples DeepSeek-V3 answered incorrectly (seed=42)"
+    "description": "Top 100 samples DeepSeek-V3 answered incorrectly (seed=42)",
+    "train_data": "eval/mind2web/data/mind2web_incorrect100.jsonl",
+    "val_data": "eval/mind2web/data/mind2web_val.jsonl",
+    "test_data": "eval/mind2web/data/mind2web_test.jsonl"
   }
 }

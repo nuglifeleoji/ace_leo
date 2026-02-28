@@ -253,15 +253,15 @@ def main():
     incorrect_name = f"mind2web_incorrect{n_ic}"
 
     cfg[correct_name] = {
-        "train_file": f"eval/mind2web/data/mind2web_correct{n_c}.jsonl",
-        "val_file":   "eval/mind2web/data/mind2web_val.jsonl",
-        "test_file":  "eval/mind2web/data/mind2web_test.jsonl",
+        "train_data": f"eval/mind2web/data/mind2web_correct{n_c}.jsonl",
+        "val_data":   "eval/mind2web/data/mind2web_val.jsonl",
+        "test_data":  "eval/mind2web/data/mind2web_test.jsonl",
         "description": f"Top {n_c} samples DeepSeek-V3 answered correctly (seed={args.seed})"
     }
     cfg[incorrect_name] = {
-        "train_file": f"eval/mind2web/data/mind2web_incorrect{n_ic}.jsonl",
-        "val_file":   "eval/mind2web/data/mind2web_val.jsonl",
-        "test_file":  "eval/mind2web/data/mind2web_test.jsonl",
+        "train_data": f"eval/mind2web/data/mind2web_incorrect{n_ic}.jsonl",
+        "val_data":   "eval/mind2web/data/mind2web_val.jsonl",
+        "test_data":  "eval/mind2web/data/mind2web_test.jsonl",
         "description": f"Top {n_ic} samples DeepSeek-V3 answered incorrectly (seed={args.seed})"
     }
 
