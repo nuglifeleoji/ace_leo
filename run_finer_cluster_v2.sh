@@ -1,30 +1,33 @@
 #!/usr/bin/env bash
 # =============================================================================
-# FiNer Curriculum Selection Pipeline
+# FiNer Curriculum Selection Pipeline — V2 (with GT labels in embeddings)
 #
-# Runs the full cluster-based curriculum selection experiment on FiNer:
-#   Step 1: Generate semantic embeddings for 1000 FiNer training samples
-#   Step 2: K-means clustering → select subsets of size 5,10,20,30,40,50,80
+# Difference from v1: embeddings now include ground-truth XBRL tags so that
+# K-means clusters by tagging-pattern diversity, not just text similarity.
+#
+# Steps:
+#   Step 1: Re-generate embeddings (sentences + GT labels)
+#   Step 2: K-means clustering → subsets of size 5,10,20,30,40,50,80,100
 #   Step 3: ACE offline training for each cluster subset
 #   Step 4: Baseline — ACE training on full 1000-sample train set
 #
-# Results are saved to  results/finer_cluster/
+# Results saved to  results/finer_cluster_v2/
 #
 # Usage:
-#   bash run_finer_cluster.sh                  # run everything
-#   bash run_finer_cluster.sh --skip_embed     # skip Step 1 (embeddings exist)
-#   bash run_finer_cluster.sh --only_eval      # only eval existing playbooks
+#   bash run_finer_cluster_v2.sh                  # run everything
+#   bash run_finer_cluster_v2.sh --skip_embed     # skip Step 1
+#   bash run_finer_cluster_v2.sh --only_eval      # only eval existing playbooks
 #
-# nohup-safe — pipe to a log file:
-#   nohup bash run_finer_cluster.sh > results/finer_cluster_main.log 2>&1 &
+# nohup-safe:
+#   nohup bash run_finer_cluster_v2.sh > results/finer_cluster_v2_main.log 2>&1 &
 # =============================================================================
 
 set -euo pipefail
 
 PYTHON=/workspace/miniconda3/envs/ace311/bin/python
 RESULTS=/workspace/ace_leo/results
-API=sambanova
-MODEL=DeepSeek-V3.1
+API=together
+MODEL=deepseek-ai/DeepSeek-V3.1
 
 SKIP_EMBED=false
 ONLY_EVAL=false
@@ -37,37 +40,37 @@ for arg in "$@"; do
 done
 
 cd /workspace/ace_leo
-mkdir -p "$RESULTS/finer_cluster"
+mkdir -p "$RESULTS/finer_cluster_v2"
 
 echo "=================================================================="
-echo "  FiNer Curriculum Selection Pipeline"
+echo "  FiNer Curriculum Selection Pipeline — V2"
 echo "  Date: $(date)"
 echo "  Model: $MODEL  API: $API"
+echo "  Embedding: sentences + GT labels"
 echo "=================================================================="
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Step 1: Generate semantic embeddings
+# Step 1: Re-generate semantic embeddings (with GT labels)
 # ──────────────────────────────────────────────────────────────────────────────
 if [ "$SKIP_EMBED" = false ] && [ "$ONLY_EVAL" = false ]; then
     echo ""
-    echo "=== Step 1: Generating semantic embeddings ==="
-    $PYTHON -m eval.finance.embed_train \
-        2>&1 | tee "$RESULTS/finer_cluster/embed.log"
+    echo "=== Step 1: Generating semantic embeddings (sentences + GT labels) ==="
+    $PYTHON -m eval.finance.embed_train --force \
+        2>&1 | tee "$RESULTS/finer_cluster_v2/embed.log"
     echo "Embeddings done @ $(date)"
 else
     echo "=== Step 1: Skipping embedding generation ==="
 fi
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Step 2: K-means clustering  (k = 5, 10, 20, 30, 40, 50, 80)
+# Step 2: K-means clustering  (k = 5, 10, 20, 30, 40, 50, 80, 100)
 # ──────────────────────────────────────────────────────────────────────────────
 if [ "$ONLY_EVAL" = false ]; then
     echo ""
-    echo "=== Step 2: K-means clustering (k=5,10,20,30,40,50,80) ==="
+    echo "=== Step 2: K-means clustering (k=5,10,20,30,40,50,80,100) ==="
     $PYTHON -m eval.finance.cluster_train \
-        --clusters 5 10 20 30 40 50 80 \
-        --visualize \
-        2>&1 | tee "$RESULTS/finer_cluster/cluster.log"
+        --clusters 5 10 20 30 40 50 80 100 \
+        2>&1 | tee "$RESULTS/finer_cluster_v2/cluster.log"
     echo "Clustering done @ $(date)"
 fi
 
@@ -77,8 +80,8 @@ fi
 run_cluster() {
     local K=$1
     local TASK="finer_cluster${K}"
-    local TRAIN_DIR="$RESULTS/finer_cluster${K}"
-    local TEST_DIR="$RESULTS/finer_cluster${K}_test"
+    local TRAIN_DIR="$RESULTS/finer_cluster_v2_${K}"
+    local TEST_DIR="$RESULTS/finer_cluster_v2_${K}_test"
 
     echo ""
     echo "─────────────────────────────────────────────"
@@ -97,11 +100,10 @@ run_cluster() {
         --reflector_model "$MODEL" \
         --curator_model   "$MODEL" \
         --save_path "$TRAIN_DIR" \
-        2>&1 | tee "$RESULTS/finer_cluster/${TASK}_train.log"
+        2>&1 | tee "$RESULTS/finer_cluster_v2/${TASK}_train.log"
 
     echo "  K=${K} training done @ $(date)"
 
-    # Find best playbook
     local PLAYBOOK
     PLAYBOOK=$(find "$TRAIN_DIR" -name "best_playbook.txt" 2>/dev/null | sort | tail -1 || true)
     if [ -z "$PLAYBOOK" ]; then
@@ -124,20 +126,20 @@ run_cluster() {
         --reflector_model "$MODEL" \
         --curator_model   "$MODEL" \
         --save_path "$TEST_DIR" \
-        2>&1 | tee "$RESULTS/finer_cluster/${TASK}_test.log"
+        2>&1 | tee "$RESULTS/finer_cluster_v2/${TASK}_test.log"
 
     echo "  K=${K} test done: $(grep 'Final Accuracy\|accuracy' \
-        "$RESULTS/finer_cluster/${TASK}_test.log" | tail -1)"
+        "$RESULTS/finer_cluster_v2/${TASK}_test.log" | tail -1)"
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Helper: eval only (uses existing playbook)
+# Helper: eval only
 # ──────────────────────────────────────────────────────────────────────────────
 eval_cluster() {
     local K=$1
     local TASK="finer_cluster${K}"
-    local TRAIN_DIR="$RESULTS/finer_cluster${K}"
-    local TEST_DIR="$RESULTS/finer_cluster${K}_test"
+    local TRAIN_DIR="$RESULTS/finer_cluster_v2_${K}"
+    local TEST_DIR="$RESULTS/finer_cluster_v2_${K}_test"
 
     local PLAYBOOK
     PLAYBOOK=$(find "$TRAIN_DIR" -name "best_playbook.txt" 2>/dev/null | sort | tail -1 || true)
@@ -160,10 +162,10 @@ eval_cluster() {
         --reflector_model "$MODEL" \
         --curator_model   "$MODEL" \
         --save_path "$TEST_DIR" \
-        2>&1 | tee "$RESULTS/finer_cluster/${TASK}_test.log"
+        2>&1 | tee "$RESULTS/finer_cluster_v2/${TASK}_test.log"
 
     echo "  K=${K} test done: $(grep 'Final Accuracy\|accuracy' \
-        "$RESULTS/finer_cluster/${TASK}_test.log" | tail -1)"
+        "$RESULTS/finer_cluster_v2/${TASK}_test.log" | tail -1)"
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -172,7 +174,7 @@ eval_cluster() {
 echo ""
 echo "=== Step 3: ACE training for each cluster subset ==="
 
-for K in 5 10 20 30 40 50 80; do
+for K in 5 10 20 30 40 50 80 100; do
     if [ "$ONLY_EVAL" = true ]; then
         eval_cluster $K
     else
@@ -186,8 +188,8 @@ done
 echo ""
 echo "=== Step 4: Baseline — full FiNer training (1000 samples) ==="
 
-BASELINE_DIR="$RESULTS/finer_baseline"
-BASELINE_TEST_DIR="$RESULTS/finer_baseline_test"
+BASELINE_DIR="$RESULTS/finer_v2_baseline"
+BASELINE_TEST_DIR="$RESULTS/finer_v2_baseline_test"
 
 if [ "$ONLY_EVAL" = false ]; then
     rm -rf "$BASELINE_DIR"
@@ -202,7 +204,7 @@ if [ "$ONLY_EVAL" = false ]; then
         --reflector_model "$MODEL" \
         --curator_model   "$MODEL" \
         --save_path "$BASELINE_DIR" \
-        2>&1 | tee "$RESULTS/finer_cluster/finer_baseline_train.log"
+        2>&1 | tee "$RESULTS/finer_cluster_v2/finer_baseline_train.log"
 
     echo "Baseline training done @ $(date)"
 fi
@@ -222,10 +224,10 @@ if [ -n "$BASELINE_PLAYBOOK" ]; then
         --reflector_model "$MODEL" \
         --curator_model   "$MODEL" \
         --save_path "$BASELINE_TEST_DIR" \
-        2>&1 | tee "$RESULTS/finer_cluster/finer_baseline_test.log"
+        2>&1 | tee "$RESULTS/finer_cluster_v2/finer_baseline_test.log"
 
     echo "Baseline test done: $(grep 'Final Accuracy\|accuracy' \
-        "$RESULTS/finer_cluster/finer_baseline_test.log" | tail -1)"
+        "$RESULTS/finer_cluster_v2/finer_baseline_test.log" | tail -1)"
 else
     echo "[WARN] No baseline playbook found at $BASELINE_DIR"
 fi
@@ -235,12 +237,12 @@ fi
 # ──────────────────────────────────────────────────────────────────────────────
 echo ""
 echo "=================================================================="
-echo "  SUMMARY — FiNer Cluster Experiment Results"
+echo "  SUMMARY — FiNer Cluster V2 Experiment Results"
 echo "=================================================================="
 echo "  Test accuracy by training subset size:"
 echo ""
-for K in 5 10 20 30 40 50 80; do
-    LOG="$RESULTS/finer_cluster/finer_cluster${K}_test.log"
+for K in 5 10 20 30 40 50 80 100; do
+    LOG="$RESULTS/finer_cluster_v2/finer_cluster${K}_test.log"
     if [ -f "$LOG" ]; then
         ACC=$(grep -E "Final Accuracy|accuracy" "$LOG" | tail -1 || echo "N/A")
         echo "    cluster${K}  : $ACC"
@@ -249,7 +251,7 @@ for K in 5 10 20 30 40 50 80; do
     fi
 done
 
-BLOG="$RESULTS/finer_cluster/finer_baseline_test.log"
+BLOG="$RESULTS/finer_cluster_v2/finer_baseline_test.log"
 if [ -f "$BLOG" ]; then
     BACC=$(grep -E "Final Accuracy|accuracy" "$BLOG" | tail -1 || echo "N/A")
     echo "    baseline (1000): $BACC"

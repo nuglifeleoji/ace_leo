@@ -96,13 +96,18 @@ def build_embedding_text(sample: Dict) -> str:
     """
     Build the text to embed for one FiNer training sample.
 
-    We use only the extracted financial sentences (the numbered questions).
-    The boilerplate XBRL tag list and the ground-truth labels are excluded,
-    so the embedding reflects purely the financial text content.
+    We combine the extracted financial sentences (the numbered questions)
+    with the ground-truth XBRL tags (target).  Including the labels ensures
+    that K-means clustering captures diversity in *tagging patterns*, not
+    just surface-level financial text similarity.
     """
     context   = sample.get("context", "")
+    target    = sample.get("target", "")
     sentences = extract_financial_sentences(context)
-    return sentences[:MAX_CHARS]
+    text = sentences
+    if target:
+        text += f"\nAnswer: {target}"
+    return text[:MAX_CHARS]
 
 
 # ── Embedding ─────────────────────────────────────────────────────────────────

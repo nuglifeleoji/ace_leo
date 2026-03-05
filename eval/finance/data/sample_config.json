@@ -43,5 +43,10 @@
         "train_data": "./eval/finance/data/finer_train_cluster80.jsonl",
         "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
         "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster100": {
+        "train_data": "./eval/finance/data/finer_train_cluster100.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
     }
 }
