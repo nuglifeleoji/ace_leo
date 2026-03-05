@@ -11,8 +11,6 @@ import os
 import json
 import re
 from typing import List, Dict, Any
-
-
 def load_data(data_path: str) -> List[Dict[str, Any]]:
     """
     Load and process data from a JSONL file.
@@ -38,7 +36,6 @@ def load_data(data_path: str) -> List[Dict[str, Any]]:
 class DataProcessor:
     """
     Processor for Mind2Web web navigation task.
-
     Handles element selection + action prediction on web pages.
     Each sample presents ~200 candidate elements and the model must select
     the correct one and specify the action (CLICK/TYPE/SELECT).
@@ -147,16 +144,13 @@ class DataProcessor:
     def answer_is_correct(self, predicted: str, ground_truth: str) -> bool:
         """
         Check if prediction matches ground truth.
-
         Checks three components with decreasing strictness:
         1. Element index must match (most important)
         2. Operation type must match
         3. Value must match for TYPE/SELECT (flexible matching)
-
         Args:
             predicted: Model's answer
             ground_truth: Ground truth answer
-
         Returns:
             bool: True if answer is correct
         """
