@@ -62,7 +62,13 @@ def _extract_letter(text: str) -> str:
         except Exception:
             pass
 
-    # Strategy 2: explicit answer patterns
+    # Strategy 2a: JSON-style "final_answer": "X" pattern (catches invalid/truncated JSON
+    # where final_answer field appears but json.loads failed due to earlier syntax errors)
+    m = re.search(r'"final_answer"\s*:\s*"([A-Da-d])"', text)
+    if m:
+        return m.group(1).upper()
+
+    # Strategy 2b: explicit answer patterns
     m = re.search(
         r"(?:answer\s+is|answer:|final\s+answer[:\s]+)\s*([A-Da-d])\b",
         text,

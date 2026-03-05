@@ -18,7 +18,7 @@ mkdir -p results/sciknow_baseline results/sciknow_full_train
 
 echo "=================================================================="
 echo "  SciKnowEval Chemistry L3 MCQ"
-  echo "  Model: $MODEL  API: $API  max_tokens: 4096"
+  echo "  Model: $MODEL  API: $API  max_tokens: 8192"
 echo "  Date: $(date)"
 echo "=================================================================="
 
@@ -32,7 +32,7 @@ $PYTHON -u -m eval.sciknow.run \
     --generator_model "$MODEL" \
     --reflector_model "$MODEL" \
     --curator_model   "$MODEL" \
-    --max_tokens  4096 \
+    --max_tokens  8192 \
     --test_workers 20 \
     --save_path   results/sciknow_baseline \
     2>&1 | tee results/sciknow_baseline.log
@@ -50,7 +50,7 @@ $PYTHON -u -m eval.sciknow.run \
     --generator_model "$MODEL" \
     --reflector_model "$MODEL" \
     --curator_model   "$MODEL" \
-    --max_tokens  4096 \
+    --max_tokens  8192 \
     --test_workers 20 \
     --save_path   results/sciknow_full_train \
     2>&1 | tee results/sciknow_full_train.log
