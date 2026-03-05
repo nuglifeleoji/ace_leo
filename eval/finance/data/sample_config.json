@@ -48,5 +48,75 @@
         "train_data": "./eval/finance/data/finer_train_cluster100.jsonl",
         "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
         "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster5_lesson": {
+        "train_data": "./eval/finance/data/finer_train_cluster5_lesson.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster10_lesson": {
+        "train_data": "./eval/finance/data/finer_train_cluster10_lesson.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster20_lesson": {
+        "train_data": "./eval/finance/data/finer_train_cluster20_lesson.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster30_lesson": {
+        "train_data": "./eval/finance/data/finer_train_cluster30_lesson.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster40_lesson": {
+        "train_data": "./eval/finance/data/finer_train_cluster40_lesson.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster50_lesson": {
+        "train_data": "./eval/finance/data/finer_train_cluster50_lesson.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster80_lesson": {
+        "train_data": "./eval/finance/data/finer_train_cluster80_lesson.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_random5": {
+        "train_data": "./eval/finance/data/finer_train_random5.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_random10": {
+        "train_data": "./eval/finance/data/finer_train_random10.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_random20": {
+        "train_data": "./eval/finance/data/finer_train_random20.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_random30": {
+        "train_data": "./eval/finance/data/finer_train_random30.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_random40": {
+        "train_data": "./eval/finance/data/finer_train_random40.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_random50": {
+        "train_data": "./eval/finance/data/finer_train_random50.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_random80": {
+        "train_data": "./eval/finance/data/finer_train_random80.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
     }
 }

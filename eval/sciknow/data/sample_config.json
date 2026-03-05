@@ -1,0 +1,12 @@
+{
+    "sciknow_chem_l3": {
+        "train_data": "./eval/sciknow/data/sciknow_chem_l3_train.jsonl",
+        "val_data":   "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data":  "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem": {
+        "train_data": "./eval/sciknow/data/sciknow_chem_train.jsonl",
+        "val_data":   "./eval/sciknow/data/sciknow_chem_val.jsonl",
+        "test_data":  "./eval/sciknow/data/sciknow_chem_test.jsonl"
+    }
+}
