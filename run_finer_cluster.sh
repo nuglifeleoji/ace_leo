@@ -21,8 +21,8 @@
 
 set -euo pipefail
 
-PYTHON=/opt/miniconda3/envs/ace-leo/bin/python
-RESULTS=/Users/leo/Desktop/ace/results
+PYTHON=/workspace/miniconda3/envs/ace311/bin/python
+RESULTS=/workspace/ace_leo/results
 API=sambanova
 MODEL=DeepSeek-V3.1
 
@@ -36,7 +36,7 @@ for arg in "$@"; do
     esac
 done
 
-cd /Users/leo/Desktop/ace
+cd /workspace/ace_leo
 mkdir -p "$RESULTS/finer_cluster"
 
 echo "=================================================================="

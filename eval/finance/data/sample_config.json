@@ -8,5 +8,40 @@
         "train_data": "./eval/finance/data/formula_train_subset_500.jsonl",
         "val_data": "./eval/finance/data/formula_val_subset_300.jsonl",
         "test_data": "./eval/finance/data/formula_test.jsonl"
+    },
+    "finer_cluster5": {
+        "train_data": "./eval/finance/data/finer_train_cluster5.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster10": {
+        "train_data": "./eval/finance/data/finer_train_cluster10.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster20": {
+        "train_data": "./eval/finance/data/finer_train_cluster20.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster30": {
+        "train_data": "./eval/finance/data/finer_train_cluster30.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster40": {
+        "train_data": "./eval/finance/data/finer_train_cluster40.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster50": {
+        "train_data": "./eval/finance/data/finer_train_cluster50.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
+    },
+    "finer_cluster80": {
+        "train_data": "./eval/finance/data/finer_train_cluster80.jsonl",
+        "val_data": "./eval/finance/data/finer_val_batched_500_samples.jsonl",
+        "test_data": "./eval/finance/data/finer_test_subset_006_seed42.jsonl"
     }
 }
