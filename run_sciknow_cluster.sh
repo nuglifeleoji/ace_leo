@@ -13,7 +13,10 @@ MODEL=deepseek-ai/DeepSeek-V3.1
 K_VALUES=(5 10 20 30 40 50 80)
 
 cd /workspace/ace_leo
-export TOGETHER_API_KEY="${TOGETHER_API_KEY:-}"
+# Load API keys from .env if not already set
+if [ -f .env ]; then
+    set -a; source .env; set +a
+fi
 
 log() { echo "[$(date '+%H:%M:%S')] $*"; }
 
@@ -40,15 +43,18 @@ run_cluster() {
         --save_path       "$save_train"
 
     log "── Test   $task_name  (K=$k) ──"
-    # Find the best playbook from training
-    PLAYBOOK=$(find "$save_train" -name "playbook_*.txt" | sort | tail -1 || true)
+    # Use best_playbook.txt saved by ACE after training
+    PLAYBOOK=$(find "$save_train" -name "best_playbook.txt" | head -1 || true)
     if [ -z "$PLAYBOOK" ]; then
-        PLAYBOOK=$(find "$save_train" -name "*.txt" | sort | tail -1 || true)
+        PLAYBOOK=$(find "$save_train" -name "final_playbook.txt" | head -1 || true)
     fi
 
     PB_ARG=""
     if [ -n "$PLAYBOOK" ]; then
+        log "  Using playbook: $PLAYBOOK"
         PB_ARG="--initial_playbook_path $PLAYBOOK"
+    else
+        log "  WARNING: no playbook found, running eval without playbook"
     fi
 
     $PYTHON -m eval.sciknow.run \

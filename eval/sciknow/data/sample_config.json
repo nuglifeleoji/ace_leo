@@ -1,12 +1,117 @@
 {
     "sciknow_chem_l3": {
         "train_data": "./eval/sciknow/data/sciknow_chem_l3_train.jsonl",
-        "val_data":   "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
-        "test_data":  "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
     },
     "sciknow_chem": {
         "train_data": "./eval/sciknow/data/sciknow_chem_train.jsonl",
-        "val_data":   "./eval/sciknow/data/sciknow_chem_val.jsonl",
-        "test_data":  "./eval/sciknow/data/sciknow_chem_test.jsonl"
+        "val_data": "./eval/sciknow/data/sciknow_chem_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_test.jsonl"
+    },
+    "sciknow_chem_l3_cluster5": {
+        "train_data": "./eval/sciknow/data/sciknow_train_cluster5.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_cluster10": {
+        "train_data": "./eval/sciknow/data/sciknow_train_cluster10.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_cluster20": {
+        "train_data": "./eval/sciknow/data/sciknow_train_cluster20.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_cluster30": {
+        "train_data": "./eval/sciknow/data/sciknow_train_cluster30.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_cluster40": {
+        "train_data": "./eval/sciknow/data/sciknow_train_cluster40.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_cluster50": {
+        "train_data": "./eval/sciknow/data/sciknow_train_cluster50.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_cluster80": {
+        "train_data": "./eval/sciknow/data/sciknow_train_cluster80.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_random5": {
+        "train_data": "./eval/sciknow/data/sciknow_train_random5.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_random10": {
+        "train_data": "./eval/sciknow/data/sciknow_train_random10.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_random20": {
+        "train_data": "./eval/sciknow/data/sciknow_train_random20.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_random30": {
+        "train_data": "./eval/sciknow/data/sciknow_train_random30.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_random40": {
+        "train_data": "./eval/sciknow/data/sciknow_train_random40.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_random50": {
+        "train_data": "./eval/sciknow/data/sciknow_train_random50.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_random80": {
+        "train_data": "./eval/sciknow/data/sciknow_train_random80.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_lesson5": {
+        "train_data": "./eval/sciknow/data/sciknow_train_lesson5.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_lesson10": {
+        "train_data": "./eval/sciknow/data/sciknow_train_lesson10.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_lesson20": {
+        "train_data": "./eval/sciknow/data/sciknow_train_lesson20.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_lesson30": {
+        "train_data": "./eval/sciknow/data/sciknow_train_lesson30.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_lesson40": {
+        "train_data": "./eval/sciknow/data/sciknow_train_lesson40.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_lesson50": {
+        "train_data": "./eval/sciknow/data/sciknow_train_lesson50.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
+    },
+    "sciknow_chem_l3_lesson80": {
+        "train_data": "./eval/sciknow/data/sciknow_train_lesson80.jsonl",
+        "val_data": "./eval/sciknow/data/sciknow_chem_l3_val.jsonl",
+        "test_data": "./eval/sciknow/data/sciknow_chem_l3_test.jsonl"
     }
 }

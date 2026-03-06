@@ -66,7 +66,7 @@ def _call_llm(client, sample: Dict) -> str:
     for attempt in range(3):
         try:
             resp = client.chat.completions.create(
-                model=MAX_TOKENS and LESSON_MODEL,  # evaluated as LESSON_MODEL
+                model=LESSON_MODEL,
                 messages=[
                     {"role": "system", "content": _SYSTEM},
                     {"role": "user",   "content": prompt},
@@ -109,13 +109,17 @@ def main() -> None:
         done_ids = {item["idx"] for item in existing_lessons}
         print(f"Resuming — {len(done_ids)} lessons already done")
 
-    # ── set up Together client ────────────────────────────────────────────────
+    # ── set up OpenAI-compatible client pointing at Together ─────────────────
+    import openai
     if API_PROVIDER == "together":
-        from together import Together
-        api_key = os.environ.get("TOGETHER_API_KEY", "")
-        client  = Together(api_key=api_key)
+        api_key  = os.environ.get("TOGETHER_API_KEY", "")
+        base_url = "https://api.together.xyz/v1"
+    elif API_PROVIDER == "sambanova":
+        api_key  = os.environ.get("SAMBANOVA_API_KEY", "")
+        base_url = "https://api.sambanova.ai/v1"
     else:
         raise ValueError(f"Unsupported API_PROVIDER: {API_PROVIDER}")
+    client = openai.OpenAI(api_key=api_key, base_url=base_url)
 
     # ── generate lessons in parallel ──────────────────────────────────────────
     from concurrent.futures import ThreadPoolExecutor, as_completed
